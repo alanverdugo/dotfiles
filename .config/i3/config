@@ -11,7 +11,7 @@
 
 set $mod Mod4
 
-# Font for window titles. Will also be used by the bari unless a different font
+# Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:Ubuntu Mono 10
 
@@ -162,6 +162,10 @@ bindsym $mod+r mode "resize"
 # nitrogen (wallpaper setter)
 # neofetch (to show off)
 # lxappearance (to change gtk themes)
+# i3blocks (to replace i3status)
+# acpi (to get battery status)
+# Forced Square font (http://www.dafont.com/forced-square.font)
+# compton (a composition manager, since i3wm does not handle that on its own)
 
 # =============================================================================
 # Colours
@@ -183,13 +187,22 @@ client.urgent               $urgent-bg-colour       $urgent-bg-colour           
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    status_command i3status
-    tray_output primary
-    font pango: Ubuntu Mono 12
-    colors{
-           background #000000
-           statusline #DCDCDC
-    }
+#	Changed i3status for i3blocks
+#	status_command i3status
+	status_command i3blocks -c ~/.config/i3/i3blocks.conf
+	#font pango: Ubuntu Mono 12
+	font pango: Forced Square 14
+	colors {
+		background #222222
+	   	separator #757575
+		statusline #7CB9E8
+		#statusline #1C6EE8
+		#statusline #1962cf
+		#                  border             background         text
+		focused_workspace  $bg-color          $bg-color          $text-color
+		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+	}
 }
 
 
@@ -198,16 +211,16 @@ bar {
 # =============================================================================
 
 # Volume up key.
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5%
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5% & exec ~/.config/i3/scripts/vol-notify.sh
 # Volume down key.
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -5% & exec ~/.config/i3/scripts/vol-notify.sh
 # Mute key
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle & exec ~/.config/i3/scripts/vol-notify.sh
 
 # Brigthness up key.
-bindsym XF86MonBrightnessUp exec xbacklight +10%
+bindsym XF86MonBrightnessUp exec xbacklight +10% & exec ~/.config/i3/scripts/brightness-notify.sh
 # Brightness down key.
-bindsym XF86MonBrightnessDown exec xbacklight -10%
+bindsym XF86MonBrightnessDown exec xbacklight -10% & exec ~/.config/i3/scripts/brightness-notify.sh
 
 
 
@@ -221,6 +234,9 @@ exec --no-startup-id dunst &
 # Network manager applet.
 exec --no-startup-id nm-applet
 
-#wallpaper
+# Nitrogen (to set the wallpaper)
 exec_always --no-startup-id nitrogen --restore
+
+# Compton
+exec --no-startup-id compton --config ~/.config/i3/compton.conf
 
