@@ -156,10 +156,10 @@ vnoremap <C-h> <gv
 vnoremap <C-l> >gv
 
 " Disable arrow keys! There is no going back!
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
+" nnoremap <up> <nop>
+" nnoremap <down> <nop>
+" nnoremap <left> <nop>
+" nnoremap <right> <nop>
 
 " -----Update plugins once a week------
 function! OnVimEnter() abort
